@@ -7,6 +7,8 @@
  * Autor: Pedro Ventura http://www.pedroventura.com
  * Si lo consideras no dudes en aportar mejoras al código.
 */
+
+
 var CookieLegal = {
 
 	// variable que contiene el nombre de la web o blog, que se usará para setear la cookie
@@ -20,10 +22,27 @@ var CookieLegal = {
 
 	// url pagina informativa sobre cookies
 	pagePermanlink: null,
+
 	// mensaje
 	mensaje: null,
+
 	// titulo página
 	tituloPagina: null,
+
+    cookiesHabilitadas: function _cookiesHabilitadas() {
+        /** original: http://stackoverflow.com/questions/8112634/jquery-detecting-cookies-enabled */
+
+        habilitada = navigator.cookieEnabled;
+
+        if (habilitada === false) {
+           return false;
+        }
+
+        // Internet Explorer devolverá siempre true, independientemente de 
+        // la realidad. 
+
+        return true;
+    },
 
 	// funcion para comprobar si el usuario es de España
 	checkGeoUsuario: function _checkGeoUsuario( url, checkGeoip ) {
@@ -61,8 +80,20 @@ var CookieLegal = {
 	// @todo: Posible mejora para sacar el texto y que se pueda configurar desde el dashboard de WP.
 	cargaMensaje: function _cargaMensaje() {
 		laCookie = CookieLegal.leerCookie();
-		if ( laCookie != 2 ) {
-			jQuery( 'body' ).prepend( '<div id="wrapperMensajeCookie" class="wrapperMensajeCookie"><div class="inner"><div class="textoLegalCookie"><p><strong>'+ CookieLegal.tituloPagina +'</strong></p><p> '+ CookieLegal.mensaje +' .<a href="'+ CookieLegal.pagePermanlink +'" target="_blank"> '+ CookieLegal.tituloPagina +'  </a>.</p><a onclick="jQuery(\'#wrapperMensajeCookie\').hide();" class="cerrarTextoLegalCookie" title="Cerrar"></a></div></div></div>' );
+		if ( laCookie != 2 && CookieLegal.cookiesHabilitadas() ) {
+
+			(jQuery( 'body' ).prepend(( 
+                '<div id="wrapperMensajeCookie" class="wrapperMensajeCookie">' + 
+                '<div class="inner"><div class="textoLegalCookie">'+ 
+                '<p><strong>'+ CookieLegal.tituloPagina + '</strong></p>' +
+                '<p>'+
+                    CookieLegal.mensaje +
+                ' <a href="'+ CookieLegal.pagePermanlink +'" target="_blank"> '+ 
+                    CookieLegal.tituloPagina + 
+                ' </a>.</p>' +
+                '<a onclick="jQuery(\'#wrapperMensajeCookie\').hide();" class="cerrarTextoLegalCookie" title="Cerrar">'+
+                '</a></div></div></div>' 
+                )));
 		}
 	},
 

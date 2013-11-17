@@ -85,7 +85,6 @@ var CookieLegal = {
 			(jQuery( 'body' ).prepend(( 
                 '<div id="wrapperMensajeCookie" class="wrapperMensajeCookie">' + 
                 '<div class="inner"><div class="textoLegalCookie">'+ 
-                '<p><strong>'+ CookieLegal.tituloPagina + '</strong></p>' +
                 '<p>'+
                     CookieLegal.mensaje +
                 ' <a href="'+ CookieLegal.pagePermanlink +'" target="_blank"> '+ 
